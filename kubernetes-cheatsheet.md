@@ -17,15 +17,15 @@ brought to you by [Sematext](https://sematext.com/kubernetes) ![](https://semate
 # Manage Resources
 - Get documentation for pod or service
 
- `kubectl explain pods,svc`
+  `kubectl explain pods,svc`
 
 - Create resource(s) like pods, services or daemonsets
 
- `kubectl create -f ./my-manifest.yaml`
+  `kubectl create -f ./my-manifest.yaml`
 
 - Apply a configuration to a resource
 
- `kubectl apply -f ./my-manifest.yaml`
+  `kubectl apply -f ./my-manifest.yaml`
 
 - Start a single instance of Nginx
 
@@ -48,7 +48,7 @@ brought to you by [Sematext](https://sematext.com/kubernetes) ![](https://semate
 
 - Delete a resource
   
-  `kubectl delete -f ./my-manifest.yaml`
+   `kubectl delete -f ./my-manifest.yaml`
 
 # Viewing, Finding Resources
 
@@ -58,69 +58,69 @@ brought to you by [Sematext](https://sematext.com/kubernetes) ![](https://semate
 
 - List all pods in all namespaces in wide format
 
- `kubectl get pods -o wide --all-namespaces`
+  `kubectl get pods -o wide --all-namespaces`
 
 - List all pods in json (or yaml) format
 
- `kubectl get pods -o json`
+  `kubectl get pods -o json`
 
 - Describe resource details (node, pod, svc)
 
- `kubectl describe nodes my-node`
+  `kubectl describe nodes my-node`
 
 - List services sorted by name
 
- `kubectl get services --sort-by=.metadata.name`
+  `kubectl get services --sort-by=.metadata.name`
 
 - List pods sorted by restart count
 
- `kubectl get pods --sort-by='.status.containerStatuses[0].restartCount'`
+  `kubectl get pods --sort-by='.status.containerStatuses[0].restartCount'`
 
 - Rolling update pods for frontend-v1
 
- `kubectl rolling-update frontend-v1 -f frontend-v2.json`
+  `kubectl rolling-update frontend-v1 -f frontend-v2.json`
 
 - Scale a replicaset named 'foo' to 3
 
- `kubectl scale --replicas=3 rs/foo`
+  `kubectl scale --replicas=3 rs/foo`
 
 - Scale a resource specified in "foo.yaml" to 3
 
- `kubectl scale --replicas=3 -f foo.yaml`
+  `kubectl scale --replicas=3 -f foo.yaml`
 
 - Execute a command in every pod / replica 
 
- `for i in 0 1; do kubectl exec foo-$i -- sh -c 'echo $(hostname) > /usr/share/nginx/html/index.html'; done`
+  `for i in 0 1; do kubectl exec foo-$i -- sh -c 'echo $(hostname) > /usr/share/nginx/html/index.html'; done`
 
 # Monitoring & Logging
 
 - Deploy Heapster from Github repository 
 https://github.com/kubernetes/heapster
 
- `kubectl create -f deploy/kube-config/standalone/`
+  `kubectl create -f deploy/kube-config/standalone/`
 
 - Show metrics for nodes
 
- `kubectl top node`
- `kubectl top node my-node-1`
+  `kubectl top node`
+  `kubectl top node my-node-1`
 
 - Show metrics for pods
  
- `kubectl top pod`
- `kubectl top pod my-pod-1`
+  `kubectl top pod`
+  `kubectl top pod my-pod-1`
 
 - Show metrics for a given pod and its containers
 
- `kubectl top pod pod_name --containers`
+  `kubectl top pod pod_name --containers`
 
 - Dump pod logs (stdout)
 
- `kubectl logs pod_name`
+  `kubectl logs pod_name`
 
 - Stream pod container logs 
 (stdout, multi-container case)
 
- `kubectl logs -f pod_name -c my-container`
+  `kubectl logs -f pod_name -c my-container`
 
 - Create a daemonset from stdin. The example deploys [Sematext Docker Agent](https://sematext.com/kuberntes) to all nodes for the cluster-wide collection of metrics, logs and events. There is NO need to deploy cAdvisor, Heapster, Prometheus, Elasticsearch, Grafana, InfluxDb on your local nodes.
 
