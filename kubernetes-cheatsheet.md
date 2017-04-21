@@ -1,6 +1,7 @@
 # Kubernetes Cheatsheet
 brought to you by [Sematext](https://sematext.com/kubernetes) ![](https://sematext.com/wp-content/uploads/2017/01/octi-footer-circle.png) 
 # Client Configuration
+
 - Setup autocomplete in bash; bash-completion package should be installed first
   
   `source <(kubectl completion bash)`
@@ -11,7 +12,7 @@ brought to you by [Sematext](https://sematext.com/kubernetes) ![](https://semate
 
 - View specific config items by json path
 
- `kubectl config view -o jsonpath='{.users[?(@.name == "k8s")].user.password}'`
+  `kubectl config view -o jsonpath='{.users[?(@.name == "k8s")].user.password}'`
  
 # Manage Resources
 - Get documentation for pod or service
