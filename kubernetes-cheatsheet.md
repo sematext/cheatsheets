@@ -163,3 +163,4 @@ spec:
           hostPath:
             path: /etc/localtime
 EOF
+```
