@@ -102,11 +102,13 @@ https://github.com/kubernetes/heapster
 - Show metrics for nodes
 
   `kubectl top node`
+  
   `kubectl top node my-node-1`
 
 - Show metrics for pods
  
   `kubectl top pod`
+  
   `kubectl top pod my-pod-1`
 
 - Show metrics for a given pod and its containers
@@ -122,7 +124,7 @@ https://github.com/kubernetes/heapster
 
   `kubectl logs -f pod_name -c my-container`
 
-- Create a daemonset from stdin. The example deploys [Sematext Docker Agent](https://sematext.com/kuberntes) to all nodes for the cluster-wide collection of metrics, logs and events. There is NO need to deploy cAdvisor, Heapster, Prometheus, Elasticsearch, Grafana, InfluxDb on your local nodes.
+- Create a daemonset from stdin. The example deploys [Sematext Docker Agent](https://sematext.com/kuberntes) to all nodes for the cluster-wide collection of metrics, logs and events. There is NO need to deploy cAdvisor, Heapster, Prometheus, Elasticsearch, Grafana, InfluxDb on your local nodes. Please replace YOUR_SPM_DOCKER_TOKEN and YOUR_LOGSENE_TOKEN with your tokens created in [Sematext Cloud UI](https://apps.sematext.com/ui/integrations/create/docker) before you run the command. 
 
 ```
 apiVersion: extensions/v1beta1
@@ -145,7 +147,7 @@ spec:
         imagePullPolicy: "Always"
         env:
         - name: SPM_TOKEN
-          value: "YOUR_SPM_TOKEN"
+          value: "YOUR_SPM_DOCKER_TOKEN"
         - name: LOGSENE_TOKEN
           value: "YOUR_LOGSENE_TOKEN"
         volumeMounts:
