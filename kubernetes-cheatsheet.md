@@ -41,8 +41,8 @@ brought to you by [Sematext](https://sematext.com/kubernetes) ![](https://semate
 	  name: mysecret
 	type: Opaque
 	data:
-	  password: $(echo "s33msi4" | base64)
-	  username: $(echo "jane" | base64)
+	  password: $(echo -n "s33msi4" | base64)
+	  username: $(echo -n "jane" | base64)
 	EOF
 	```
 
