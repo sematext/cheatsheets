@@ -3,7 +3,7 @@
 ## Node Management
 
 - Initialize a swarm: `docker swarm init`
-- List swarm nodes : `docker node ls`
+- List swarm nodes: `docker node ls`
 - Get the command for new nodes to join a swarm: `docker swarm join-token worker` or `docker swarm join-token worker`. The command prints the required command and token: E.g. 
 
 ```
@@ -26,11 +26,11 @@ To add a worker to this swarm, run the following command:
 ## Service Management
  
 
-- List services (manger node): `docker service ls`
+- List services (manager node): `docker service ls`
 - Describe services (manager node): `docker service ps service_name`
 - Inspect a service: `docker service inspect service_name`
 - Scale a service: `docker service scale service_name=N`
-- Remove service : `docker service rm service_name`
+- Remove service: `docker service rm service_name`
 
 ## Stack Management
 - Deploy stack from docker-compose file: `docker stack deploy -c docker-compose.yml stack_name`
@@ -42,7 +42,7 @@ To add a worker to this swarm, run the following command:
 ## Network Management
 - List networks: `docker network ls`
 - Create overlay network: `docker network create -d overlay network_name`
-- Remove network : `docker network rm network_name`
+- Remove network: `docker network rm network_name`
 
 ## Monitor services
 - Docker stats: `docker stats`
@@ -54,4 +54,3 @@ docker service create --mode global --name sematext-agent-docker \
 --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
 -e SPM_TOKEN=YOUR_SPM_TOKEN -e LOGSENE_TOKEN=YOUR_LOGSENE_TOKEN sematext/sematext-agent-docker
 ```
-
