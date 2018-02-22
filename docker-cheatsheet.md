@@ -134,14 +134,14 @@ The command above will collect all container metrics, host metrics, container lo
 [`docker search searchTerm`](https://docs.docker.com/engine/reference/commandline/search) 
 * Pull image from a registry: [`docker pull imageName`](https://docs.docker.com/engine/reference/commandline/pull) pulls an image from registry to local machine
 * Create image from Dockerfile: [`docker build`](https://docs.docker.com/engine/reference/commandline/build)
-* Remove image [`docker rmi imageName`](https://docs.docker.com/engine/reference/commandline/rmi) 
+* Remove image: [`docker rmi imageName`](https://docs.docker.com/engine/reference/commandline/rmi) 
 * Export container into tgz file: [`docker export myContainerName -o myContainerName `](https://docs.docker.com/engine/reference/commandline/export) 
 * Create an image from a tgz file:[`docker import file`](https://docs.docker.com/engine/reference/commandline/import) 
 
 ## Docker networks
 
 * List existing networks: [`docker network ls`](https://docs.docker.com/engine/reference/commandline/network_ls/)
-* Create a network [`docker network create netName`](https://docs.docker.com/engine/reference/commandline/network_create/)
+* Create a network: [`docker network create netName`](https://docs.docker.com/engine/reference/commandline/network_create/)
 * Remove network: [`docker network rm netName`](https://docs.docker.com/engine/reference/commandline/network_rm/)
 * Show network details: [`docker network inspect`](https://docs.docker.com/engine/reference/commandline/network_inspect/)
 * Connect container to a network: [`docker network connect networkName containerName`](https://docs.docker.com/engine/reference/commandline/network_connect/)
