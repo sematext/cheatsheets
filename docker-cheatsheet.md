@@ -2,7 +2,7 @@
 
 ## Tutorial series
 
-Get started with Docker: https://docs.docker.com/engine/getstarted/
+Get started with Docker: [https://docs.docker.com/engine/getstarted/](https://docs.docker.com/engine/getstarted/)
 
 ## Installation
 
@@ -14,7 +14,7 @@ Install script provided by Docker:
 curl -sSL https://get.docker.com/ | sh
 ```
 
-Or see [Installation](https://docs.docker.com/engine/installation/linux/) instructions for your distribution.
+Or see [Installation](https://docs.docker.com/engine/installation/linux/) instructions for your Linux distribution.
 
 
 ### Mac OS X
@@ -28,7 +28,7 @@ You can use [Docker Machine](https://docs.docker.com/machine/) to:
 - Provision and manage multiple remote Docker hosts
 - Provision Swarm clusters
 
-A simple example to create a local Docker VM with virtualbox: 
+A simple example to create a local Docker VM with VirtualBox: 
 
 ```
 docker-machine create --driver=virtualbox default
@@ -47,28 +47,32 @@ That's it, you have a running Docker container.
 
 ## Container Lifecycle
 
-* Create a container: [`docker create -e ENVVAR:VALUE -p HOSTPORT:CONTAINERPORT -v HOSTPATH:CONTAINERPATH --name myContainerName image_name`](https://docs.docker.com/engine/reference/commandline/create). In some cases containers need [extended privileges](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities). Add privileges with the `--cap_add` switch, e.g. `docker run --cap-add SYS_ADMIN`. The flag `--cap_drop` is used to remove privileges.  
-* Creates and start a container in one operation. [`docker run -e ENVVAR:VALUE -p HOSTPORT:CONTAINERPORT -v HOSTPATH:CONTAINERPATH image_name`](https://docs.docker.com/engine/reference/commandline/run).
+* Create a container: [`docker create imageName`](https://docs.docker.com/engine/reference/commandline/create).  
+* Create and start a container in one operation: [`docker run imageName`](https://docs.docker.com/engine/reference/commandline/run)
   -  Remove the container after it stops `--rm`: `docker run  --rm alpine ls /usr/lib`
-  -  Run the container in background use `-d` switch
-  -  Mount a directory on the host to a docker container add `-v` option, e.g. `docker run -v $HOSTDIR:$DOCKERDIR`. 
-  -  To map a container port use `-p $HOSTPORT:$CONTAINERPORT`. 
-  -  A complete example to run nginx web server to serve files from html directory on port 8080: 
+  -  Attach the container stdin/stdout to the current terminal use `-it`: `docker run -it ubuntu bash`
+  -  To mount a directory on the host to a container add `-v` option, e.g. `docker run -v $HOSTDIR:$DOCKERDIR imageName` 
+  -  To map a container port use `-p $HOSTPORT:$CONTAINERPORT`: `docker run -p 8080:80 nginx`
+  -  To run the container in background use `-d` switch: `docker run -d -p 8080:80 nginx`
+  -  Set container name: `docker run --name myContainerName imageName` 
+  -  Example to run nginx web server to serve files from html directory on port 8080: 
 
 ```
-    docker run -d -v $(pwd)/html:/usr/share/nginx/html -p 8080:80 nginx
+    docker run -d -v $(pwd)/html:/usr/share/nginx/html -p 8080:80 --name myNginx nginx
     # access the webserver
     curl http://localhost:8080
 ``` 
-
-* Rename container: [`docker rename name newName`](https://docs.docker.com/engine/reference/commandline/rename/) 
-* Delete a container: [`docker rm containerID`](https://docs.docker.com/engine/reference/commandline/rm).
-  - Delete all unused containers: `docker ps -q -a | xargs docker rm`. 
-  - Remove the volumes associated with the container: `docker rm -v`.
+* In some cases containers need [extended privileges](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities). Add privileges with the `--cap_add` switch, e.g. `docker run --cap-add SYS_ADMIN imageName`. The flag `--cap_drop` is used to remove privileges. 
+* Rename a container: [`docker rename name newName`](https://docs.docker.com/engine/reference/commandline/rename/) 
+* Delete a container: [`docker rm containerID`](https://docs.docker.com/engine/reference/commandline/rm)
+  - Delete all unused containers: `docker ps -q -a | xargs docker rm`
+  - Remove the volumes associated with a container: `docker rm -v containerName`
  
-* Update container's resource limits:
-[`docker update --cpu-shares 512 -m 300M`](https://docs.docker.com/engine/reference/commandline/update/).  
-* List running container: [`docker ps`](https://docs.docker.com/engine/reference/commandline/ps/). To list all containers run `docker ps -q -a`
+* Update container resource limits:
+[`docker update --cpu-shares 512 -m 300M`](https://docs.docker.com/engine/reference/commandline/update/)  
+* List running containers: [`docker ps`](https://docs.docker.com/engine/reference/commandline/ps/)
+* List all containers: [`docker ps -a`](https://docs.docker.com/engine/reference/commandline/ps/)
+* List all container IDs: [`docker ps -q -a`](https://docs.docker.com/engine/reference/commandline/ps/)
 
 ## Starting and stopping containers
 
@@ -80,48 +84,35 @@ That's it, you have a running Docker container.
 * Stop and wait for termination: [`docker wait containerName`](https://docs.docker.com/engine/reference/commandline/wait) 
 * Kill a container (sends SIGKILL): [`docker kill containerName`](https://docs.docker.com/engine/reference/commandline/kill) 
 
-## Executing Commands in containers and apply changes
+## Executing commands in containers and apply changes
 
-* Execute a command in a container [`docker exec -it containerName command`](https://docs.docker.com/engine/reference/commandline/exec) 
+* Execute a command in a container: [`docker exec -it containerName command`](https://docs.docker.com/engine/reference/commandline/exec) 
 * Copy files or folders between a container and the local filesystem: [`docker cp containerName:path localFile`](https://docs.docker.com/engine/reference/commandline/cp) or `docker cp localPath containerName:path`
 * Apply changes in in container file systems: [`docker commit containerName`](https://docs.docker.com/engine/reference/commandline/commit)
 
 
 ## Logging and monitoring
 
-Logging on Docker could be challenging, please check [Top 10 Docker Logging Gotchas](https://sematext.com/blog/top-10-docker-logging-gotchas/).
+Logging on Docker could be challenging - check [Top 10 Docker Logging Gotchas](https://sematext.com/blog/top-10-docker-logging-gotchas/).
 
 * Show container logs: [`docker logs containerName`](https://docs.docker.com/engine/reference/commandline/logs)
 * Show only new logs: [`docker logs -f containerName`](https://docs.docker.com/engine/reference/commandline/logs)
 * Show CPU and memory usage: [`docker stats`](https://docs.docker.com/engine/reference/commandline/stats)
+* Show CPU and memory usage for specific containers: [`docker stats containerName1 containerName2`](https://docs.docker.com/engine/reference/commandline/stats)
 * Show running processes in a container: [`docker top containerName`](https://docs.docker.com/engine/reference/commandline/top) 
 * Show Docker events: [`docker events`](https://docs.docker.com/engine/reference/commandline/events) 
 * Show storage usage: [`docker system df`](https://docs.docker.com/engine/reference/commandline/system_df) 
-* Use a [logging driver](https://docs.docker.com/engine/admin/logging/overview/) for individual containers. To run docker with a custom log driver (i.e., to syslog), use `docker run \
+* To run a container with a custom [logging driver](https://docs.docker.com/engine/admin/logging/overview/) (i.e., to syslog), use: `docker run \
       -–log-driver syslog –-log-opt syslog-address=udp://syslog-server:514 \
       alpine echo hello world`.
-* Ship logs to Elasticsearch: 
+* Use [Sematext Docker Agent](https://sematext.com/docker/) for log collection. Create Docker Monitoring App & Logs App in [Sematext Cloud UI](https://sematext.com/cloud) to get required tokens. Start collecting all container metrics, host metrics, container logs and Docker events:
 
 ```
-
-docker plugin install rchicoli/docker-log-elasticsearch:0.1.1 --alias elasticsearch
-
-# run your container
-docker run --rm  -ti \
-    --log-driver elasticsearch \
-    --log-opt elasticsearch-url=http://elasticsearch:9200 \
-    --log-opt elasticsearch-index=docker \
-    --log-opt elasticsearch-type=log \
-    --log-opt elasticsearch-timeout=100 \
-    --log-opt elasticsearch-version=5 \
-    --log-opt elasticsearch-fields=containerID,containerName,containerImageID,containerImageName,containerLabels,containerEnv \
-        alpine echo this is a test logging message
-```
-
-* Use [Sematext Docker Agent](https://sematext.com/docker/) as log collection container. First get the required tokens in [Sematext Cloud UI](https://sematext.com/cloud) by creating a "Docker"  monitoring app: 
-
-```
-docker run -d --name sematext-agent-docker -e SPM_TOKEN=YOUR_SPM_TOKEN -e LOGSENE_TOKEN=YOUR_LOGSENE_TOKEN -v /var/run/docker.sock:/var/run/docker.sock sematext/sematext-agent-docker
+	docker run -d --name sematext-agent-docker \
+	-e SPM_TOKEN=YOUR_SPM_TOKEN 
+	-e LOGSENE_TOKEN=YOUR_LOGSENE_TOKEN \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	sematext/sematext-agent-docker
 ```
 
 The command above will collect all container metrics, host metrics, container logs and Docker events. 
@@ -131,7 +122,7 @@ The command above will collect all container metrics, host metrics, container lo
 
 * Show Docker info: [`docker info`](https://docs.docker.com/engine/reference/commandline/info)
 * List all containers: [`docker ps -a`](https://docs.docker.com/engine/reference/commandline/ps) 
-* List all images: [`docker images`](https://docs.docker.com/engine/reference/commandline/images) 
+* List all images: [`docker image ls`](https://docs.docker.com/engine/reference/commandline/image_ls) 
 * Show all container details: [`docker inspect containerName`](https://docs.docker.com/engine/reference/commandline/inspect) 
 * Show changes in the container's files:[`docker diff containerName`](https://docs.docker.com/engine/reference/commandline/diff) 
 
@@ -139,15 +130,15 @@ The command above will collect all container metrics, host metrics, container lo
 ## Manage Docker images
 
 * List all images: [`docker images`](https://docs.docker.com/engine/reference/commandline/images) 
-* Searches in registry for an image:
+* Search in registry for an image:
 [`docker search searchTerm`](https://docs.docker.com/engine/reference/commandline/search) 
-* Pull image from a registry: [`docker pull imageName`](https://docs.docker.com/engine/reference/commandline/pull) pulls an image from registry to local machine.
+* Pull image from a registry: [`docker pull imageName`](https://docs.docker.com/engine/reference/commandline/pull) pulls an image from registry to local machine
 * Create image from Dockerfile: [`docker build`](https://docs.docker.com/engine/reference/commandline/build)
 * Remove image [`docker rmi imageName`](https://docs.docker.com/engine/reference/commandline/rmi) 
 * Export container into tgz file: [`docker export myContainerName -o myContainerName `](https://docs.docker.com/engine/reference/commandline/export) 
 * Create an image from a tgz file:[`docker import file`](https://docs.docker.com/engine/reference/commandline/import) 
 
-### Docker networks
+## Docker networks
 
 * List existing networks: [`docker network ls`](https://docs.docker.com/engine/reference/commandline/network_ls/)
 * Create a network [`docker network create netName`](https://docs.docker.com/engine/reference/commandline/network_create/)
@@ -164,5 +155,4 @@ Data Management Commands:
 * Remove unused volumes: [`docker volume prune`](https://docs.docker.com/engine/reference/commandline/volume_prune/)
 * Remove unused networks: [`docker network prune`](https://docs.docker.com/engine/reference/commandline/network_prune/)
 * Remove unused containers: [`docker container prune`](https://docs.docker.com/engine/reference/commandline/network_prune/)
-* Remove unused images: [`docker image prune`](https://docs.docker.com/engine/reference/commandline/network_prune/))
-
+* Remove unused images: [`docker image prune`](https://docs.docker.com/engine/reference/commandline/network_prune/)
