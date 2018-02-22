@@ -63,8 +63,8 @@ That's it, you have a running Docker container.
 
 * Rename container: [`docker rename name newName`](https://docs.docker.com/engine/reference/commandline/rename/) 
 * Delete a container: [`docker rm containerID`](https://docs.docker.com/engine/reference/commandline/rm).
-  - Delete all unused containers run `docker ps -q -a | xargs docker rm`. 
-  - Remove the volumes associated with the container, include the `-v` switch like in `docker rm -v`.
+  - Delete all unused containers: `docker ps -q -a | xargs docker rm`. 
+  - Remove the volumes associated with the container: `docker rm -v`.
  
 * Update container's resource limits:
 [`docker update --cpu-shares 512 -m 300M`](https://docs.docker.com/engine/reference/commandline/update/).  
@@ -124,7 +124,7 @@ docker run --rm  -ti \
 docker run -d --name sematext-agent-docker -e SPM_TOKEN=YOUR_SPM_TOKEN -e LOGSENE_TOKEN=YOUR_LOGSENE_TOKEN -v /var/run/docker.sock:/var/run/docker.sock sematext/sematext-agent-docker
 ```
 
-The command above will collect all container metrics, host metrics, container logas and Docker events. 
+The command above will collect all container metrics, host metrics, container logs and Docker events. 
 
 
 ## Exploring Docker information
