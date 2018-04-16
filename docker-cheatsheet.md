@@ -45,7 +45,7 @@ docker run alpine echo "hello-world"
 That's it, you have a running Docker container.
 
 
-## Container Lifecycle
+## Container lifecycle
 
 * Create a container: [`docker create imageName`](https://docs.docker.com/engine/reference/commandline/create).  
 * Create and start a container in one operation: [`docker run imageName`](https://docs.docker.com/engine/reference/commandline/run)
@@ -88,7 +88,7 @@ That's it, you have a running Docker container.
 
 * Execute a command in a container: [`docker exec -it containerName command`](https://docs.docker.com/engine/reference/commandline/exec) 
 * Copy files or folders between a container and the local filesystem: [`docker cp containerName:path localFile`](https://docs.docker.com/engine/reference/commandline/cp) or `docker cp localPath containerName:path`
-* Apply changes in in container file systems: [`docker commit containerName`](https://docs.docker.com/engine/reference/commandline/commit)
+* Apply changes in container file systems: [`docker commit containerName`](https://docs.docker.com/engine/reference/commandline/commit)
 
 
 ## Logging and monitoring
@@ -102,17 +102,19 @@ Logging on Docker could be challenging - check [Top 10 Docker Logging Gotchas](h
 * Show running processes in a container: [`docker top containerName`](https://docs.docker.com/engine/reference/commandline/top) 
 * Show Docker events: [`docker events`](https://docs.docker.com/engine/reference/commandline/events) 
 * Show storage usage: [`docker system df`](https://docs.docker.com/engine/reference/commandline/system_df) 
-* To run a container with a custom [logging driver](https://docs.docker.com/engine/admin/logging/overview/) (i.e., to syslog), use: `docker run \
-      -–log-driver syslog –-log-opt syslog-address=udp://syslog-server:514 \
-      alpine echo hello world`.
+* To run a container with a custom [logging driver](https://docs.docker.com/engine/admin/logging/overview/) (i.e., to syslog), use: 
+```
+docker run -–log-driver syslog –-log-opt syslog-address=udp://syslog-server:514 \
+alpine echo hello world
+```
 * Use [Sematext Docker Agent](https://sematext.com/docker/) for log collection. Create Docker Monitoring App & Logs App in [Sematext Cloud UI](https://sematext.com/cloud) to get required tokens. Start collecting all container metrics, host metrics, container logs and Docker events:
 
 ```
-	docker run -d --name sematext-agent-docker \
-	-e SPM_TOKEN=YOUR_SPM_TOKEN 
-	-e LOGSENE_TOKEN=YOUR_LOGSENE_TOKEN \
-	-v /var/run/docker.sock:/var/run/docker.sock \
-	sematext/sematext-agent-docker
+docker run -d --name sematext-agent-docker \
+-e SPM_TOKEN=YOUR_SPM_TOKEN 
+-e LOGSENE_TOKEN=YOUR_LOGSENE_TOKEN \
+-v /var/run/docker.sock:/var/run/docker.sock \
+sematext/sematext-agent-docker
 ```
 
 The command above will collect all container metrics, host metrics, container logs and Docker events. 
@@ -149,7 +151,7 @@ The command above will collect all container metrics, host metrics, container lo
 
 ## Data cleanup 
 
-Data Management Commands:
+Data management commands:
 
 * Remove unused resources: [`docker system prune`](https://docs.docker.com/engine/reference/commandline/system_prune/)
 * Remove unused volumes: [`docker volume prune`](https://docs.docker.com/engine/reference/commandline/volume_prune/)
