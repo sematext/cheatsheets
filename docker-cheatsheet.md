@@ -107,17 +107,37 @@ Logging on Docker could be challenging - check [Top 10 Docker Logging Gotchas](h
 docker run -–log-driver syslog –-log-opt syslog-address=udp://syslog-server:514 \
 alpine echo hello world
 ```
-* Use [Sematext Docker Agent](https://sematext.com/docker/) for log collection. Create Docker Monitoring App & Logs App in [Sematext Cloud UI](https://sematext.com/cloud) to get required tokens. Start collecting all container metrics, host metrics, container logs and Docker events:
+* Use [Sematext Docker Agent](https://sematext.com/docker/) for log collection. Create Docker Monitoring App & Logs App in [Sematext Cloud](https://sematext.com/cloud) to get required tokens. Start collecting all container metrics, host metrics and Docker events:
 
 ```
-docker run -d --name sematext-agent-docker \
--e SPM_TOKEN=YOUR_SPM_TOKEN 
--e LOGSENE_TOKEN=YOUR_LOGSENE_TOKEN \
+docker run -d  --restart always --privileged -P --name st-agent \
+-v /sys/kernel/debug:/sys/kernel/debug \
+-v /var/run/:/var/run/ \
+-v /proc:/host/proc:ro \
+-v /etc:/host/etc:ro \
+-v /sys:/host/sys:ro \
+-v /usr/lib:/host/usr/lib:ro \
+-e CONTAINER_TOKEN=YourContainerToken \
+-e INFRA_TOKEN=YourInfraToken \
+-e JOURNAL_DIR=/var/run/st-agent \
+-e LOGGING_WRITE_EVENTS=false \
+-e LOGGING_REQUEST_TRACKING=false \
+-e LOGGING_LEVEL=info \
+-e NODE_NAME=`hostname` \
+-e CONTAINER_SKIP_BY_IMAGE=sematext \
+sematext/agent:latest
+```
+
+Collect all container logs:
+
+```
+docker run -d --name st-logagent \
+-e LOGS_TOKEN=YourLogsToken \
 -v /var/run/docker.sock:/var/run/docker.sock \
-sematext/sematext-agent-docker
+sematext/logagent
 ```
 
-The command above will collect all container metrics, host metrics, container logs and Docker events. 
+The commands above will collect all container metrics, host metrics, Docker events, and container logs. 
 
 
 ## Exploring Docker information
