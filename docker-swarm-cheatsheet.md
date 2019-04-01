@@ -42,10 +42,33 @@ docker swarm join \
 ## Monitor services
 - Docker stats: `docker stats`
 - Service logs: `docker service logs service_name`
-- Cluster-wide monitoring and log collection with [Sematext Docker Agent on Swarm](https://sematext.com/blog/docker-swarm-mode-full-cluster-monitoring-logging-with-1-command/): Create a Docker App in [Sematext Cloud](https://sematext.com/cloud/) to get log and monitoring tokens, then run:
+- Cluster-wide monitoring and log collection with [Sematext Docker Agent on Swarm](https://sematext.com/blog/docker-swarm-mode-full-cluster-monitoring-logging-with-1-command/): Create a Docker App in [Sematext Cloud](https://sematext.com/cloud/) to get monitoring tokens, follow the instructions in the UI, which shows the follwing command with your tokens:
 
 ```
-docker service create --mode global --name sematext-agent-docker \
---mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
--e SPM_TOKEN=YOUR_SPM_TOKEN -e LOGSENE_TOKEN=YOUR_LOGSENE_TOKEN sematext/sematext-agent-docker
+docker service create --mode global --name st-agent \
+--restart-condition any \
+--mount type=bind,src=/var/run,dst=/var/run/ \
+--mount type=bind,src=/usr/lib,dst=/host/usr/lib \
+--mount type=bind,src=/sys/kernel/debug,dst=/sys/kernel/debug \
+--mount type=bind,src=/proc,dst=/host/proc,readonly \
+--mount type=bind,src=/etc,dst=/host/etc,readonly \
+--mount type=bind,src=/sys,dst=/host/sys,readonly \
+-e NODE_NAME={{.Node.Hostname}} \
+-e CONTAINER_TOKEN=YourContainerToken \
+-e INFRA_TOKEN=YourInfraToken \
+-e JOURNAL_DIR=/var/run/st-agent \
+-e LOGGING_REQUEST_TRACKING=false \
+-e LOGGING_WRITE_EVENTS=false \
+-e LOGGING_LEVEL=info \
+sematext/agent:latest
 ```
+Collect all container logs:
+
+```
+docker service create --mode global --name st-logagent \
+--restart-condition any \
+--mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+-e LOGS_TOKEN=YourLogsToken \
+sematext/logagent:latest
+```
+
