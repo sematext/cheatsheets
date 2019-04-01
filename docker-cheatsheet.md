@@ -107,7 +107,7 @@ Logging on Docker could be challenging - check [Top 10 Docker Logging Gotchas](h
 docker run -–log-driver syslog –-log-opt syslog-address=udp://syslog-server:514 \
 alpine echo hello world
 ```
-* Use [Sematext Docker Agent](https://sematext.com/docker/) for log collection. Create Docker Monitoring App & Logs App in [Sematext Cloud](https://sematext.com/cloud) to get required tokens. Start collecting all container metrics, host metrics and Docker events:
+* Use [Sematext Agent](https://sematext.com/docker/) for log collection. Create Docker Monitoring App & Logs App in [Sematext Cloud](https://sematext.com/cloud) to get required tokens. Start collecting all container metrics, host metrics and Docker events:
 
 ```
 docker run -d  --restart always --privileged -P --name st-agent \
