@@ -42,7 +42,7 @@ docker swarm join \
 ## Monitor services
 - Docker stats: `docker stats`
 - Service logs: `docker service logs service_name`
-- Cluster-wide monitoring and log collection with [Sematext Docker Agent on Swarm](https://sematext.com/blog/docker-swarm-mode-full-cluster-monitoring-logging-with-1-command/): Create a Docker App in [Sematext Cloud](https://sematext.com/cloud/) to get monitoring tokens, follow the instructions in the UI, which shows the follwing command with your tokens:
+- Cluster-wide monitoring and log collection with [Sematext Docker Agent on Swarm](https://sematext.com/blog/docker-swarm-mode-full-cluster-monitoring-logging-with-1-command/): Create a Docker App in [Sematext Cloud](https://sematext.com/cloud/) to get monitoring tokens and use them instead the placeholders `YourContainerToken`, `YourInfraToken` and `YourLogsToken` in commands below. Follow the instructions in the UI, which shows the following command with your tokens:
 
 ```
 docker service create --mode global --name st-agent \
